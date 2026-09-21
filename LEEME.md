@@ -33,14 +33,16 @@ En un par de minutos la app estará en `https://TU-USUARIO.github.io/notas-fcb/`
 Es lo que permite que los móviles compartan notas. En [supabase.com](https://supabase.com) (gratis):
 
 1. Crea un proyecto.
-2. Abre **SQL Editor**, pega entero el archivo [`supabase/esquema.sql`](supabase/esquema.sql) y pulsa **Run**.
-3. Para que funcione el calendario oficial, ejecuta también esto con tu token de football-data.org:
+2. Abre **SQL Editor**, pega entero el archivo [`supabase/esquema.sql`](supabase/esquema.sql) y pulsa **Run**. Con esto ya funciona el grupo compartido.
+3. *(Opcional, para el calendario oficial y el autorrellenado)* pega y ejecuta [`supabase/calendario.sql`](supabase/calendario.sql), y luego guarda tu token de football-data.org:
 
 ```sql
 insert into public.ajustes (clave, valor)
 values ('football_data_token', 'PEGA_AQUI_TU_TOKEN')
 on conflict (clave) do update set valor = excluded.valor;
 ```
+
+Va aparte a propósito: usa una extensión de Postgres que podría no estar disponible, y si fallara no debe tumbar la instalación del resto.
 
 4. Ve a **Project Settings → API** y copia la **Project URL** y la clave **anon public**.
 5. Pégalas en `config.js` de esta carpeta y vuelve a publicar:

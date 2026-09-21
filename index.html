@@ -293,9 +293,15 @@
     function partirInvitacion(txt){const limpio=String(txt||'').trim().toUpperCase().replace(/\s+/g,'');const i=limpio.indexOf('-');
       if(i<4)return null;return {codigo:limpio.slice(0,i),clave:limpio.slice(i+1)};}
 
+    /* keepalive sobrevive a que cierres la app, pero solo admite 64 KB de cuerpo:
+       a mitad de temporada el documento pasa de ahí, así que entonces se envía normal
+       (y si no llega, la copia local sigue intacta y se sube al volver a abrir). */
+    const LIMITE_KEEPALIVE=60000;
     async function rpc(fn,args,opciones){const c=cfgSync();if(!c.url||!c.anon)throw new Error('Falta la configuración del servidor');
-      const r=await fetch(c.url+'/rest/v1/rpc/'+fn,{method:'POST',keepalive:!!(opciones&&opciones.keepalive),
-        headers:{'Content-Type':'application/json',apikey:c.anon,Authorization:'Bearer '+c.anon},body:JSON.stringify(args)});
+      const cuerpo=JSON.stringify(args);
+      const aguanta=!!(opciones&&opciones.keepalive)&&cuerpo.length<LIMITE_KEEPALIVE;
+      const r=await fetch(c.url+'/rest/v1/rpc/'+fn,{method:'POST',keepalive:aguanta,
+        headers:{'Content-Type':'application/json',apikey:c.anon,Authorization:'Bearer '+c.anon},body:cuerpo});
       const txt=await r.text();
       if(!r.ok){let msg='';try{const j=JSON.parse(txt);msg=j.message||j.hint||j.error||'';}catch(e){msg=txt;}
         throw new Error(msg||('HTTP '+r.status));}
