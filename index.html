@@ -536,7 +536,10 @@
     async function nativeGet(url,headers){throw new Error('Las consultas oficiales pasan por el grupo');}
     async function fdGet(path){if(!hayGrupo())throw new Error('Conecta este móvil a un grupo para consultar el calendario oficial');
       let res;try{const c=cfgSync();res=await rpc('fd_get',{p_codigo:c.codigo,p_clave:c.clave,p_ruta:path});}
-      catch(e){throw new Error('No se pudo consultar: '+(e.message||e));}
+      catch(e){const msg=String(e.message||e);
+        if(/función|function/i.test(msg)&&/no|not|could not/i.test(msg))
+          throw new Error('El servidor del grupo todavía no tiene instalado el calendario: ejecuta supabase/calendario.sql');
+        throw new Error('No se pudo consultar: '+msg);}
       if(!res)throw new Error('El servidor no devolvió nada');
       if(res.status===401||res.status===403)throw new Error('La clave de football-data.org del servidor no da acceso a este dato');
       if(res.status===429)throw new Error('Límite de 10 peticiones por minuto: espera un momento');
