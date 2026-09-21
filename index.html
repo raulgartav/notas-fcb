@@ -300,8 +300,12 @@
     async function rpc(fn,args,opciones){const c=cfgSync();if(!c.url||!c.anon)throw new Error('Falta la configuración del servidor');
       const cuerpo=JSON.stringify(args);
       const aguanta=!!(opciones&&opciones.keepalive)&&cuerpo.length<LIMITE_KEEPALIVE;
+      /* Supabase da dos formatos de clave: la antigua es un JWT (empieza por eyJ) y va
+         también como Bearer; la nueva (sb_publishable_…) no lo es y mandarla así falla. */
+      const cabeceras={'Content-Type':'application/json',apikey:c.anon};
+      if(/^eyJ/.test(c.anon))cabeceras.Authorization='Bearer '+c.anon;
       const r=await fetch(c.url+'/rest/v1/rpc/'+fn,{method:'POST',keepalive:aguanta,
-        headers:{'Content-Type':'application/json',apikey:c.anon,Authorization:'Bearer '+c.anon},body:cuerpo});
+        headers:cabeceras,body:cuerpo});
       const txt=await r.text();
       if(!r.ok){let msg='';try{const j=JSON.parse(txt);msg=j.message||j.hint||j.error||'';}catch(e){msg=txt;}
         throw new Error(msg||('HTTP '+r.status));}
