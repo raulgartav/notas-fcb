@@ -11,22 +11,19 @@ No es una app de la App Store: se instala desde Safari con «Añadir a pantalla 
 
 ## Puesta en marcha (una sola vez)
 
-### 1. Publicar la app
+### 1. Publicar la app — ✅ ya está hecho
 
-Necesitas una cuenta de GitHub (gratis). Con el repositorio ya creado en esta carpeta:
+**La app está en https://raulgartav.github.io/notas-fcb/**
 
-```bash
-gh auth login
-```
-
-```bash
-cd "/Users/raulgarciatavera/Desktop/varios/Aplicación FCB espacio Claude/notas-movil" && gh repo create notas-fcb --public --source=. --push
-```
-
-Después, en GitHub: **Settings → Pages → Source: Deploy from a branch → main / (root) → Save**.
-En un par de minutos la app estará en `https://TU-USUARIO.github.io/notas-fcb/`.
+Repositorio: https://github.com/raulgartav/notas-fcb (público, porque GitHub Pages gratuito lo exige).
 
 > El HTML queda público, pero **no lleva ningún dato ni ninguna clave secreta**: las notas viven en el servidor del grupo y solo se entra con el código.
+
+Para publicar cualquier cambio a partir de ahora, desde esta carpeta:
+
+```bash
+cd "/Users/raulgarciatavera/Desktop/varios/Aplicación FCB espacio Claude/notas-movil" && git add -A && git commit -m "Describe aquí el cambio" && git push
+```
 
 ### 2. Crear el servidor del grupo
 
@@ -57,7 +54,7 @@ Si prefieres no tocar `config.js`, cada móvil puede pegar esos dos valores desd
 
 ### 3. Instalarla en cada iPhone
 
-1. Abre la dirección en **Safari** (tiene que ser Safari; Chrome en iOS no instala apps).
+1. Abre **https://raulgartav.github.io/notas-fcb/** en **Safari** (tiene que ser Safari; Chrome en iOS no instala apps).
 2. Botón de compartir → **Añadir a pantalla de inicio**.
 3. Ábrela desde el icono, no desde Safari.
 
