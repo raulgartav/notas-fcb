@@ -25,7 +25,11 @@ Para publicar cualquier cambio a partir de ahora, desde esta carpeta:
 cd "/Users/raulgarciatavera/Desktop/varios/Aplicación FCB espacio Claude/notas-movil" && git add -A && git commit -m "Describe aquí el cambio" && git push
 ```
 
-### 2. Crear el servidor del grupo
+### 2. Crear el servidor del grupo — ✅ ya está hecho
+
+**Proyecto de Supabase «notas fcb»** (`isohudibzblqdbnapuxj`, región París, plan gratuito), con `esquema.sql` ejecutado el 2026-10-31 y `config.js` ya rellenado. El plan gratuito pausa el proyecto si pasa una semana sin uso: se reactiva entrando en supabase.com y pulsando «Restore», sin perder nada.
+
+Lo de abajo queda como referencia por si hubiera que montarlo de nuevo.
 
 Es lo que permite que los móviles compartan notas. En [supabase.com](https://supabase.com) (gratis):
 
