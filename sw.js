@@ -1,6 +1,6 @@
 /* Service worker: deja la app entera en el teléfono para que abra sin conexión.
    Sube VERSION al publicar cambios y el móvil se actualizará solo al reabrirla. */
-const VERSION = 'notas-fcb-v3';
+const VERSION = 'notas-fcb-v4';
 const SHELL = [
   './',
   './index.html',
